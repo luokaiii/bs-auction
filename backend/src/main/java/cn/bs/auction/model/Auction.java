@@ -3,6 +3,9 @@ package cn.bs.auction.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -44,5 +47,12 @@ public class Auction extends Entity{
         PAYED,
         /* 已发货，结束 */
         SHIP
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Override
+    public Integer getId() {
+        return super.getId();
     }
 }

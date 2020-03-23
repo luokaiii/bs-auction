@@ -3,6 +3,9 @@ package cn.bs.auction.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -32,7 +35,7 @@ public class Goods extends Entity{
     /* 用户ID */
     private Integer userId;
     /* 交货方式 */
-    private String deliveryMethod;
+    private Method deliveryMethod;
     /* 交货时间 */
     private String deliveryTime;
     /* 商品状态 */
@@ -66,5 +69,12 @@ public class Goods extends Entity{
         EXPRESS,
         /* 自提 */
         PICK_UP
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Override
+    public Integer getId() {
+        return super.getId();
     }
 }
