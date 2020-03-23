@@ -1,0 +1,46 @@
+.user-layout {
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+
+  .header {
+    height: 125px;
+    background-color: #ffffff;
+    padding: 0;
+
+    .top {
+      height: 35px;
+      line-height: 35px;
+      background-color: #f3f3f3;
+    }
+
+    .bottom {
+      color: #ffffff;
+      height: 90px;
+      line-height: 90px;
+      background-color: #e5503c;
+
+      .bottom-content {
+        display: flex;
+        height: 90px;
+        line-height: 90px;
+        justify-content: space-between;
+
+        .ant-menu-horizontal {
+          color: #ffffff;
+          height: 90px;
+          line-height: 90px;
+          background-color: #e5503c;
+
+          &:hover {
+            color: #ffffff;
+          }
+        }
+
+        .ant-menu-item-active {
+          background-color: #ffffff;
+        }
+      }
+    }
+  }
+}

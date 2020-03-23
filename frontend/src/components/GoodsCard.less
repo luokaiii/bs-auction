@@ -1,0 +1,53 @@
+.goods-card {
+    overflow: hidden;
+    display: inline-block;
+    width: 270px;
+    height: 330px;
+    margin: 10px;
+    border: 1px solid #eeeeee;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0 5px 5px 0 #eeeeee;
+    }
+
+    .picture {
+        overflow: hidden;
+        text-align: center;
+        height: 210px;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .title {
+        height: 30px;
+        line-height: 30px;
+        font-size: 17px;
+        font-weight: 600;
+        overflow : hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        &:hover {
+            color: #e5503c;
+        }
+    }
+
+    .price-view {
+        padding: 10px 20px;
+
+        .red {
+            color: #e5503c;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .left {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .right {
+            text-align: right;
+        }
+    }
+}
