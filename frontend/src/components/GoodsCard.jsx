@@ -1,10 +1,13 @@
 import React from "react";
-import {Icon} from 'antd'
+import { Icon } from "antd";
 import "./GoodsCard.less";
 
 export default () => {
+  const gotoDetails = () => {
+    window.location.href = "/#/f/details/0";
+  };
   return (
-    <div className="goods-card">
+    <div className="goods-card" onClick={gotoDetails}>
       <div className="picture">
         <img
           alt=""
@@ -24,7 +27,11 @@ export default () => {
             当前价：<span className="red">￥400</span>
           </div>
         </div>
-        <div className="right">竞拍次数：<Icon type="fire" theme="twoTone" />15</div>
+        <div className="right">
+          竞拍次数：
+          <Icon type="fire" theme="twoTone" />
+          15
+        </div>
       </div>
     </div>
   );
