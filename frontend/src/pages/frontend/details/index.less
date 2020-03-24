@@ -1,46 +1,117 @@
 .details {
-    .ant-breadcrumb {
+  margin-bottom: 70px;
+  .ant-breadcrumb {
+    height: 50px;
+    line-height: 50px;
+  }
+
+  .title-div {
+    font-size: 22px;
+  }
+
+  .bg-white-div {
+    margin: 25px 0;
+    padding: 20px;
+    background-color: #ffffff;
+  }
+
+  .desc-div {
+    display: flex;
+    .left {
+      width: 700px;
+      padding-right: 50px;
+
+      .carousel {
+        width: 600px;
+        height: 500px;
+        overflow: hidden;
+        image {
+          width: 600px;
+          height: 500px;
+        }
+      }
+
+      .dots {
+        height: 100px;
+        display: flex;
+
+        .dot {
+          cursor: pointer;
+          width: 100px;
+          height: 100px;
+          line-height: 100px;
+          text-align: center;
+
+          img {
+            width: 90px;
+            height: 90px;
+          }
+        }
+      }
+    }
+
+    .right {
+      width: 500px;
+
+      .title {
+        color: #333333;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .price-time {
+        display: flex;
+        justify-content: space-between;
         height: 50px;
         line-height: 50px;
-    }
+      }
 
-    .title-div {
-        font-size: 22px;
-    }
+      .bid {
+        height: 185px;
+        padding: 10px 20px;
+        background-color: rgba(240, 240, 240, 0.7);
+        margin: 20px 0;
 
-    .bg-white-div {
-        margin: 25px 0;
-        padding: 20px;
-        background-color: #ffffff;
-    }
-
-    .desc-div {
-        display: flex;
-        .left {
-            width: 700px;
-            padding-right: 100px;
-
-            .dots {
-                height: 100px;
-                display: flex;
-
-                .dot {
-                    cursor: pointer;
-                    width: 100px;
-                    height: 100px;
-                    line-height: 100px;
-                    text-align: center;
-
-                    img {
-                        width: 90px;
-                        height: 90px;
-                    }
-                }
-            }
+        .bid1 {
+          text-align: center;
+          color: #333333;
+          font-size: 18px;
+          font-weight: bold;
+          height: 50px;
+          line-height: 50px;
         }
 
-        .right {
-            width: 500px;
+        .bid2 {
+          font-size: 18px;
+          height: 100px;
+          line-height: 100px;
+          .ant-input-number {
+            height: 54px;
+            line-height: 54px;
+            width: 270px;
+            font-size: 18px;
+            margin-right: 20px;
+          }
+
+          .ant-btn {
+            font-size: 18px;
+            height: 54px;
+            line-height: 54px;
+            color: #ffffff;
+            font-weight: bold;
+            background-color: #35c735;
+          }
         }
+      }
+
+      .desc {
+        .line {
+          display: flex;
+          justify-content: space-between;
+          height: 30px;
+          line-height: 30px;
+        }
+      }
     }
+  }
 }
