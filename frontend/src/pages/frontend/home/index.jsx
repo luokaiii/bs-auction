@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Carousel, Tabs } from "antd";
 
+import MockPic from "./static/mock.jpg";
 import CardList from "./card_list";
 import "./index.less";
 
@@ -15,11 +16,7 @@ const TagTypes = [
   "其它"
 ];
 
-const CarouselImgs = [
-  "http://imgs.qudiandi.com/20190802/92ada4c1a4a6718b78c6e17ac6e100e7.jpg!800w_450h_2c",
-  "http://imgs.qudiandi.com/20190801/fc59c59b3bc1e1c5839700a0344bea7a.JPG!800w_450h_2c",
-  "http://imgs.qudiandi.com/20190801/fc59c59b3bc1e1c5839700a0344bea7a.JPG!800w_450h_2c"
-];
+const CarouselImgs = [MockPic, MockPic, MockPic, MockPic];
 
 export default () => {
   const [data] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]);
@@ -48,7 +45,7 @@ export default () => {
           <Carousel dotPosition="right" autoplay>
             {CarouselImgs.map((v, i) => (
               <div key={i}>
-                <img src={v} alt={i} key={i} />
+                <img src={v} alt={i} key={i} className="carousel-image" />
               </div>
             ))}
           </Carousel>

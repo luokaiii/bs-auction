@@ -11,12 +11,12 @@ export default () => {
     <Layout className="user-layout">
       <Layout.Header className="header">
         <div className="top">
-          <div className="width-content">点滴拍卖，欢迎您！登录 | 注册</div>
+          <div className="width-content">亚伟拍卖，欢迎您！登录 | 注册</div>
         </div>
         <div className="bottom">
           <div className="width-content bottom-content">
             <div>
-              <img src={LOGO} alt="logo" />
+              <img src={LOGO} alt="logo" className="logo" />
             </div>
             <Menu mode="horizontal">
               <Menu.Item>
