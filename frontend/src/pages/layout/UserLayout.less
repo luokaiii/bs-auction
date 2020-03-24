@@ -3,6 +3,10 @@
   width: 100vw;
   overflow: auto;
 
+  .ant-layout-content {
+    min-height: auto;
+  }
+
   .header {
     height: 125px;
     background-color: #ffffff;
@@ -56,6 +60,34 @@
 
         .ant-menu-item-active {
           background-color: #ffffff;
+        }
+      }
+    }
+  }
+
+  .footer {
+    color: #666666;
+    background-color: #282828;
+    height: 130px;
+
+    .footer-div {
+      display: flex;
+      padding: 0 250px;
+    }
+    .logo {
+      height: 90px;
+    }
+
+    .copy {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px 0;
+
+      a {
+        color: #666666;
+        &:hover {
+          color: #e5503c;
         }
       }
     }

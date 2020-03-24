@@ -31,11 +31,20 @@
         white-space: nowrap;
         overflow: hidden;
         line-height: 30px;
+        padding: 0;
 
-        li {
-          cursor: pointer;
-          &:hover {
-            color: red;
+        .list-item {
+          width: 300px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
+          a {
+            color: #1b1b1b;
+
+            &:hover {
+              color: #ee5050;
+            }
           }
         }
       }

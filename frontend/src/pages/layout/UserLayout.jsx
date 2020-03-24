@@ -53,6 +53,23 @@ export default () => {
           ))}
         </Switch>
       </Layout.Content>
+      <Layout.Footer className="footer">
+        <div className="width-content footer-div">
+          <div>
+            <img src={LOGO} alt="" className="logo" />
+          </div>
+          <div className="copy">
+            <div>
+              <Link to="/f/help/about">关于我们</Link> |{" "}
+              <Link to="/f/help/rule">拍卖规则</Link> |{" "}
+              <Link to="/f/help/flow">支付流程</Link>
+            </div>
+            <div>
+              没公司没版权没备案号 ©备ICP1111111111号 All Rights Reserved
+            </div>
+          </div>
+        </div>
+      </Layout.Footer>
     </Layout>
   );
 };

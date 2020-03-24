@@ -30,7 +30,7 @@ export default ({ match }) => {
       </Breadcrumb>
       <Row>
         <Col span={6} style={{ paddingRight: "20px" }}>
-          <Menu defaultSelectedKeys={[page]}>
+          <Menu selectedKeys={[page]}>
             <Menu.Item key="about">
               <Link to="/f/help/about">关于我们</Link>
             </Menu.Item>

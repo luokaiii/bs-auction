@@ -4,6 +4,7 @@ import { Carousel, Tabs } from "antd";
 import MockPic from "./static/mock.jpg";
 import CardList from "./card_list";
 import "./index.less";
+import { Link } from "react-router-dom";
 
 const TagTypes = [
   "全部",
@@ -26,15 +27,19 @@ export default () => {
         <div className="left">
           <div className="title">
             <div className="title1">最新拍卖</div>
-            <div className="title2">查看更多 ></div>
+            <div className="title2">
+              <Link to="/f/list">查看更多 ></Link>
+            </div>
           </div>
           <div className="list">
             <ul>
               {data.map((v, i) => (
                 <li key={i}>
-                  <div>
-                    （VD4027）《论注庆卯录》 线装一册 油印本 佛教书 宗教书
-                    《往生论注》又称《净土论注》
+                  <div className="list-item">
+                    <Link to="/f/details/0">
+                      （VD4027）《论注庆卯录》 线装一册 油印本 佛教书 宗教书
+                      《往生论注》又称《净土论注》
+                    </Link>
                   </div>
                 </li>
               ))}
@@ -45,7 +50,9 @@ export default () => {
           <Carousel dotPosition="right" autoplay>
             {CarouselImgs.map((v, i) => (
               <div key={i}>
-                <img src={v} alt={i} key={i} className="carousel-image" />
+                <Link to="/f/details/0">
+                  <img src={v} alt={i} key={i} className="carousel-image" />
+                </Link>
               </div>
             ))}
           </Carousel>
