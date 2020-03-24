@@ -5,7 +5,7 @@ import './index.less';
 export default () =>  {
     return (
         <div>
-            首页
+            管理员
         </div>
     )
 }

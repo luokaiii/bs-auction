@@ -1,11 +1,9 @@
 import React from 'react'
 
-import './index.less';
-
-export default () =>  {
+export default () => {
     return (
         <div>
-            首页
+            
         </div>
     )
 }
