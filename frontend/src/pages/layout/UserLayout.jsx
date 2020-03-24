@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Icon } from "antd";
+import { Layout, Menu, Icon, Button } from "antd";
 import { Switch, Route, Link } from "react-router-dom";
 
 import LOGO from "./static/logo.png";
@@ -11,7 +11,12 @@ export default () => {
     <Layout className="user-layout">
       <Layout.Header className="header">
         <div className="top">
-          <div className="width-content">亚伟拍卖，欢迎您！登录 | 注册</div>
+          <div className="width-content">
+            亚伟拍卖，欢迎您！登录 | 注册{" "}
+            <Button type="link" size="small" href="/#/b/home">
+              进入后台
+            </Button>
+          </div>
         </div>
         <div className="bottom">
           <div className="width-content bottom-content">
