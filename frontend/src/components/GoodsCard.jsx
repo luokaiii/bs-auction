@@ -1,6 +1,9 @@
 import React from "react";
-import { Icon } from "antd";
+import { Icon, Badge } from "antd";
+import Countdown from "antd/lib/statistic/Countdown";
 import "./GoodsCard.less";
+
+const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
 
 export default ({ isMore = false }) => {
   const gotoDetails = () => {
@@ -22,10 +25,12 @@ export default ({ isMore = false }) => {
   return (
     <div className="goods-card" onClick={gotoDetails}>
       <div className="picture">
-        <img
-          alt=""
-          src="http://imgs.qudiandi.com/20200320/87429fa2ae2d55ad77c950c0cbfa9351.jpg!210w_210h_4e"
-        />
+        <Badge count="未开始">
+          <img
+            alt=""
+            src="http://imgs.qudiandi.com/20200320/87429fa2ae2d55ad77c950c0cbfa9351.jpg!210w_210h_4e"
+          />
+        </Badge>
       </div>
       <div className="title">
         （乙4262）原田由己编辑《标笺正、续文章轨范》和刻本 线装6册全
@@ -40,10 +45,12 @@ export default ({ isMore = false }) => {
             当前价：<span className="red">￥400</span>
           </div>
         </div>
+
         <div className="right">
-          竞拍次数：
+          {/* 竞拍次数：
           <Icon type="fire" theme="twoTone" />
-          15
+          15 */}
+          <Countdown value={deadline} format="距开始：D 天 H 时 m 分 s 秒" />
         </div>
       </div>
     </div>

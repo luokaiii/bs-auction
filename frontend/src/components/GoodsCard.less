@@ -1,17 +1,17 @@
 .goods-card2 {
-    overflow: hidden;
-    display: inline-block;
-    width: 270px;
-    height: 330px;
-    margin: 10px;
-    border: 1px solid #eeeeee;
-    cursor: pointer;
-    text-align: center;
-    line-height: 330px;
-  
-    &:hover {
-      box-shadow: 0 5px 5px 0 #eeeeee;
-    }
+  overflow: hidden;
+  display: inline-block;
+  width: 270px;
+  height: 330px;
+  margin: 10px;
+  border: 1px solid #eeeeee;
+  cursor: pointer;
+  text-align: center;
+  line-height: 330px;
+
+  &:hover {
+    box-shadow: 0 5px 5px 0 #eeeeee;
+  }
 }
 .goods-card {
   overflow: hidden;
@@ -21,6 +21,23 @@
   margin: 10px;
   border: 1px solid #eeeeee;
   cursor: pointer;
+
+  .ant-badge-count {
+    top: 20px;
+    right: 10px;
+  }
+
+  .ant-badge-count-finish {
+    background-color: #3f3f3f;
+  }
+
+  .ant-badge-count-progress {
+    background-color: #52c41a;
+  }
+
+  .ant-badge-count-await {
+    background-color: #f5222d;
+  }
 
   &:hover {
     box-shadow: 0 5px 5px 0 #eeeeee;
