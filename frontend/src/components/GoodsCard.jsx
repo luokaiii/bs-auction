@@ -2,10 +2,23 @@ import React from "react";
 import { Icon } from "antd";
 import "./GoodsCard.less";
 
-export default () => {
+export default ({ isMore = false }) => {
   const gotoDetails = () => {
     window.location.href = "/#/f/details/0";
   };
+
+  const gotoList = () => {
+    window.location.href = "/#/f/list";
+  };
+
+  if (isMore) {
+    return (
+      <div className="goods-card2" onClick={gotoList}>
+        查看更多...
+      </div>
+    );
+  }
+
   return (
     <div className="goods-card" onClick={gotoDetails}>
       <div className="picture">

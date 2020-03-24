@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout, Menu, Icon } from "antd";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 
 import LOGO from "./static/logo.png";
 import { frontRoutes } from "../../routerConfig";
@@ -19,9 +19,24 @@ export default () => {
               <img src={LOGO} alt="logo" />
             </div>
             <Menu mode="horizontal">
-              <Menu.Item key="/home"><Icon type="home" />竞拍首页</Menu.Item>
-              <Menu.Item key="/me"><Icon type="user" />我的竞拍</Menu.Item>
-              <Menu.Item key="/help"><Icon type="question-circle" />竞拍帮助</Menu.Item>
+              <Menu.Item key="/home">
+                <Link to="/f/home">
+                  <Icon type="home" />
+                  竞拍首页
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="/me">
+                <Link to="/f/me">
+                  <Icon type="user" />
+                  我的竞拍
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="/help">
+                <Link to="/f/help">
+                  <Icon type="question-circle" />
+                  竞拍帮助
+                </Link>
+              </Menu.Item>
             </Menu>
           </div>
         </div>

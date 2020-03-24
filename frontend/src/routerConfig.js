@@ -1,6 +1,8 @@
 import FHome from "./pages/frontend/home";
 import FList from "./pages/frontend/list";
 import FDetails from "./pages/frontend/details";
+import FMe from "./pages/frontend/me";
+import FHelp from "./pages/frontend/help";
 
 import BHome from "./pages/backend/home";
 import BAuction from "./pages/backend/auction";
@@ -18,6 +20,14 @@ export const frontRoutes = [
   {
     path: "/f/list",
     component: FList
+  },
+  {
+    path: "/f/me",
+    component: FMe
+  },
+  {
+    path: "/f/help",
+    component: FHelp
   },
   {
     path: "/f/details/:id",
