@@ -19,20 +19,20 @@ export default () => {
               <img src={LOGO} alt="logo" />
             </div>
             <Menu mode="horizontal">
-              <Menu.Item key="/home">
+              <Menu.Item>
                 <Link to="/f/home">
                   <Icon type="home" />
                   竞拍首页
                 </Link>
               </Menu.Item>
-              <Menu.Item key="/me">
+              <Menu.Item>
                 <Link to="/f/me">
                   <Icon type="user" />
                   我的竞拍
                 </Link>
               </Menu.Item>
-              <Menu.Item key="/help">
-                <Link to="/f/help">
+              <Menu.Item>
+                <Link to="/f/help/about">
                   <Icon type="question-circle" />
                   竞拍帮助
                 </Link>

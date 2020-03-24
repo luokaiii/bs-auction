@@ -26,7 +26,7 @@ export const frontRoutes = [
     component: FMe
   },
   {
-    path: "/f/help",
+    path: "/f/help/:page",
     component: FHelp
   },
   {
