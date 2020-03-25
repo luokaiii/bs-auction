@@ -12,7 +12,8 @@ export default () => {
       <Layout.Header className="header">
         <div className="top">
           <div className="width-content">
-            亚伟拍卖，欢迎您！登录 | 注册{" "}
+            亚伟拍卖，欢迎您！<Link to="/f/login">登录</Link> |{" "}
+            <Link to="/f/registry">注册</Link>
             <Button type="link" size="small" href="/#/b/home">
               进入后台
             </Button>

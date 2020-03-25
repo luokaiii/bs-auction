@@ -1,6 +1,8 @@
 import React from "react";
-import { Icon, Badge } from "antd";
+import { Badge } from "antd";
 import Countdown from "antd/lib/statistic/Countdown";
+
+import CoverImg from "../static/cover.jpg";
 import "./GoodsCard.less";
 
 const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
@@ -26,10 +28,7 @@ export default ({ isMore = false }) => {
     <div className="goods-card" onClick={gotoDetails}>
       <div className="picture">
         <Badge count="未开始">
-          <img
-            alt=""
-            src="http://imgs.qudiandi.com/20200320/87429fa2ae2d55ad77c950c0cbfa9351.jpg!210w_210h_4e"
-          />
+          <img alt="" src={CoverImg} />
         </Badge>
       </div>
       <div className="title">

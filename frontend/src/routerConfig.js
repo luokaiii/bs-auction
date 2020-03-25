@@ -2,6 +2,9 @@ import FHome from "./pages/frontend/home";
 import FList from "./pages/frontend/list";
 import FDetails from "./pages/frontend/details";
 import FMe from "./pages/frontend/me";
+import FLogin from "./pages/frontend/me/login";
+import FRegistry from "./pages/frontend/me/registry";
+import FReset from "./pages/frontend/me/reset";
 import FHelp from "./pages/frontend/help";
 
 import BHome from "./pages/backend/home";
@@ -32,6 +35,18 @@ export const frontRoutes = [
   {
     path: "/f/details/:id",
     component: FDetails
+  },
+  {
+    path: "/f/login",
+    component: FLogin
+  },
+  {
+    path: "/f/registry",
+    component: FRegistry
+  },
+  {
+    path: "/f/reset",
+    component: FReset
   }
 ];
 

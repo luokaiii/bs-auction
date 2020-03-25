@@ -2,13 +2,6 @@ import React from "react";
 import {
   Breadcrumb,
   Icon,
-  Tag,
-  Carousel,
-  InputNumber,
-  Button,
-  List,
-  Skeleton,
-  Avatar,
   Radio,
   Row,
   Col,
