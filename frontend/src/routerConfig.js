@@ -9,9 +9,9 @@ import FHelp from "./pages/frontend/help";
 
 import BHome from "./pages/backend/home";
 import BAuction from "./pages/backend/auction";
-import BAuctionCreate from "./pages/backend/auction/create";
+import BAuctionDetails from "./pages/backend/auction/details";
+import BAuctionEdit from "./pages/backend/auction/edit";
 import BOrderList from "./pages/backend/order";
-import BAdminList from "./pages/backend/admin";
 import BUser from "./pages/backend/user";
 
 // 前台页面
@@ -61,8 +61,12 @@ export const backRoutes = [
     component: BAuction
   },
   {
-    path: "/b/auction/edit/:id",
-    component: BAuctionCreate
+    path: "/b/auction/details/:id",
+    component: BAuctionDetails
+  },
+  {
+    path: "/b/auction/edit/:id/:type",
+    component: BAuctionEdit
   },
   {
     path: "/b/user/list/:role",
@@ -71,9 +75,5 @@ export const backRoutes = [
   {
     path: "/b/order/list/:type",
     component: BOrderList
-  },
-  {
-    path: "/b/system/admin",
-    component: BAdminList
   }
 ];

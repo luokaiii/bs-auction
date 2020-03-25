@@ -12,6 +12,7 @@ import {
 } from "antd";
 import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
 
+import AuctionRecord from '../../../components/AuctionRecord'
 import "./index.less";
 import Countdown from "antd/lib/statistic/Countdown";
 
@@ -132,29 +133,7 @@ export default () => {
         </div>
         <div className="bg-white-div record-div">
           <h1>出价记录</h1>
-          <List
-            itemLayout="horizontal"
-            loadMore={
-              <Button block style={{ border: "none" }} onClick={loadMore}>
-                查看更多
-              </Button>
-            }
-            dataSource={bidList}
-            renderItem={item => (
-              <List.Item>
-                <Skeleton avatar title={false} loading={false} active>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title="张三"
-                    description="出价 11000 元"
-                  />
-                  <div>2020年03月24日 10时14分33秒</div>
-                </Skeleton>
-              </List.Item>
-            )}
-          />
+          <AuctionRecord />
         </div>
         <div className="bg-white-div details-div">
           <h1>拍品详情</h1>
