@@ -19,7 +19,7 @@ export default ({ fileList, setFileList, replace = true }) => {
   };
 
   const customRemove = file => {
-    const files = fileList.filter(v => v.url !== file.url);
+    const files = fileList.filter(v => v.uid !== file.uid);
     setFileList(files);
   };
 
