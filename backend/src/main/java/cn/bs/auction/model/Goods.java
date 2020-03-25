@@ -32,10 +32,10 @@ public class Goods extends Entity {
     @NotEmpty
     private String description;
     /* 起拍价 */
-    @NotEmpty
+    @NotNull
     private Long startPrice;
     /* 加价幅度 */
-    @NotEmpty
+    @NotNull
     private Long range;
     /* 竞拍次数 */
     private Long time;
