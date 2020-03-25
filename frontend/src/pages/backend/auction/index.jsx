@@ -31,7 +31,7 @@ const columns = [
     render: () => "￥4999元"
   },
   {
-    title: "创建人",
+    title: "创建人(管理员)",
     key: "username",
     render: () => "管理员-张三"
   },
@@ -46,7 +46,7 @@ const columns = [
     render: () => "拍卖中"
   },
   {
-    title: "中标人",
+    title: "中标人(用户)",
     key: "auctionUsername",
     render: () => "用户-李四"
   },
