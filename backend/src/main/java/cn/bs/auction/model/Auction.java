@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -16,37 +17,40 @@ import java.time.LocalDateTime;
 @javax.persistence.Entity
 @Table(name = "table_auction")
 @Data
-public class Auction extends Entity{
+public class Auction extends Entity {
     /* 用户名 */
     private String username;
     /* 用户ID */
     private Integer userId;
-    /* 用户ID */
-    private Integer goodsId;
-    /* 名称 */
-    private String goodsName;
-    /* 开始时间 */
-    private LocalDateTime goodsStartTime;
-    /* 结束时间 */
-    private LocalDateTime goodsEndTime;
     /* 竞拍价格 */
     private Long price;
-    /* 支付时间 */
-    private LocalDateTime payTime;
-    /* 发货时间 */
-    private LocalDateTime shipTime;
+    /* 完成时间 */
+    private LocalDateTime finishTime;
     /* 状态 */
     private Status status;
+    /* 竞拍时间 */
+    private LocalDateTime createTime;
+
+    /* 竞品ID */
+    private Integer goodsId;
+    /* 竞品名称 */
+    private String goodsName;
+    /* 竞品封面 */
+    private String goodsCover;
+    /* 竞品开始时间 */
+    private LocalDateTime goodsStartTime;
+    /* 竞品结束时间 */
+    private LocalDateTime goodsEndTime;
 
     public enum Status {
-        /* 待审核 */
+        /* 竞拍中 */
         CREATED,
-        /* 已审核、待付款 */
-        UN_PAY,
-        /* 已支付、待发货 */
-        PAYED,
-        /* 已发货，结束 */
-        SHIP
+        /* 中标 */
+        BID,
+        /* 未中标 */
+        UN_BID,
+        /* 完成 */
+        FINISHED
     }
 
     @Id

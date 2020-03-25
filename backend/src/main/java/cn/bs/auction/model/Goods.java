@@ -3,72 +3,91 @@ package cn.bs.auction.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @javax.persistence.Entity
 @Table(name = "table_goods")
 @Data
-public class Goods extends Entity{
+public class Goods extends Entity {
     /* 名称 */
+    @NotEmpty
     private String name;
-    /* 仓库地址 */
-    private String warehouse;
     /* 拍卖类型 */
+    @NotNull
     private Type type;
     /* 封面 */
+    @NotEmpty
     private String cover;
     /* 详情图 */
+    @NotEmpty
     private String pictures;
+    /* 简介 */
+    @NotEmpty
+    private String introduce;
+    /* 描述 */
+    @NotEmpty
+    private String description;
     /* 起拍价 */
-    private Long start;
+    @NotEmpty
+    private Long startPrice;
     /* 加价幅度 */
+    @NotEmpty
     private Long range;
-    /* 出货商 */
-    private String provider;
-    /* 用户名 */
-    private String username;
-    /* 用户ID */
-    private Integer userId;
-    /* 交货方式 */
-    private Method deliveryMethod;
-    /* 交货时间 */
-    private String deliveryTime;
+    /* 竞拍次数 */
+    private Long time;
     /* 商品状态 */
     private Status status;
+    /* 是否下架，带默认值，增改查都会带着 */
+    private Boolean deleted = false;
+
+    /* 创建人 */
+    private String username;
+    /* 创建人ID */
+    private Integer userId;
+
     /* 创建时间 */
     private LocalDateTime createTime;
     /* 开始时间 */
     private LocalDateTime startTime;
     /* 结束时间 */
     private LocalDateTime endTime;
-    /* 竞拍记录 */
-    private String records;
-    /* 中标用户 */
+
+    /* 中标用户名称 */
     private String auctionUsername;
+    /* 中标用户ID */
+    private String auctionUserId;
+    /* 中标价格 */
+    private String auctionPrice;
 
     public enum Type {
-
+        /* 手机 */
+        PHONE,
+        /* 图书 */
+        BOOKS,
+        /* 服装 */
+        CLOTHING,
+        /* 珠宝首饰 */
+        JEWELRY,
+        /* 3C数码 */
+        DIGITAL,
+        /* 汽车用品 */
+        CAR,
+        /* 其它 */
+        OTHER
     }
+
     /*  */
     public enum Status {
-        /* 待发起 */
+        /* 等待中 */
         CREATED,
-        /* 竞拍开始 */
+        /* 竞拍进行中 */
         STARTED,
         /* 竞拍结束 */
         END,
-    }
-
-    public enum Method {
-        /* 物流 */
-        EXPRESS,
-        /* 自提 */
-        PICK_UP
     }
 
     @Id
@@ -76,5 +95,10 @@ public class Goods extends Entity{
     @Override
     public Integer getId() {
         return super.getId();
+    }
+
+    @Column(length = 2000)
+    public String getPictures() {
+        return pictures;
     }
 }

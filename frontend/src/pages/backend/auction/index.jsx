@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
+import { Link } from "react-router-dom";
 
 import CoverImg from "../../../static/cover.jpg";
 import "./index.less";
-import { Link } from "react-router-dom";
 
 const columns = [
   {
@@ -31,7 +31,12 @@ const columns = [
     render: () => "￥4999元"
   },
   {
-    title: "开始时间",
+    title: "创建人",
+    key: "username",
+    render: () => "管理员-张三"
+  },
+  {
+    title: "开拍时间",
     key: "startTime",
     render: () => "2020-03-25 14:00:12"
   },
@@ -39,6 +44,11 @@ const columns = [
     title: "当前状态",
     key: "status",
     render: () => "拍卖中"
+  },
+  {
+    title: "中标人",
+    key: "auctionUsername",
+    render: () => "用户-李四"
   },
   {
     title: "出价记录",
