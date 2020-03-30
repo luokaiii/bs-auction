@@ -7,12 +7,12 @@ import FRegistry from "./pages/frontend/me/registry";
 import FReset from "./pages/frontend/me/reset";
 import FHelp from "./pages/frontend/help";
 
-import BHome from "./pages/backend/home";
 import BAuction from "./pages/backend/auction";
 import BAuctionDetails from "./pages/backend/auction/details";
 import BAuctionEdit from "./pages/backend/auction/edit";
 import BOrderList from "./pages/backend/order";
-import BUser from "./pages/backend/user";
+import BUserList from "./pages/backend/user";
+import BUserCreate from "./pages/backend/user/create";
 
 // 前台页面
 export const frontRoutes = [
@@ -53,10 +53,6 @@ export const frontRoutes = [
 // 后台页面
 export const backRoutes = [
   {
-    path: "/b/home",
-    component: BHome
-  },
-  {
     path: "/b/auction/list/:type",
     component: BAuction
   },
@@ -70,7 +66,11 @@ export const backRoutes = [
   },
   {
     path: "/b/user/list/:role",
-    component: BUser
+    component: BUserList
+  },
+  {
+    path: "/b/user/create",
+    component: BUserCreate
   },
   {
     path: "/b/order/list/:type",

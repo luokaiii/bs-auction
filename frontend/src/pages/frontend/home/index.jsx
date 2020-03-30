@@ -1,26 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Carousel, Tabs } from "antd";
 
+import { getByPage } from "../../../service/GoodsApi";
 import MockPic from "./static/mock.jpg";
 import CardList from "./card_list";
 import "./index.less";
-import { Link } from "react-router-dom";
 
 const TagTypes = [
-  "全部",
-  "手机",
-  "图书",
-  "服装",
-  "珠宝首饰",
-  "3C数码",
-  "汽车用品",
-  "其它"
+  { title: "全部", type: null },
+  { title: "手机", type: "PHONE" },
+  { title: "图书", type: "BOOKS" },
+  { title: "服装", type: "CLOTHING" },
+  { title: "珠宝首饰", type: "JEWELRY" },
+  { title: "3C数码", type: "DIGITAL" },
+  { title: "汽车用品", type: "CAR" },
+  { title: "其它", type: "OTHER" }
 ];
 
 const CarouselImgs = [MockPic, MockPic, MockPic, MockPic];
 
 export default () => {
-  const [data] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]);
+  const [latest, setLatest] = useState([]);
+
+  useEffect(() => {
+    getByPage({ page: 0, size: 12 }).then(res => {
+      setLatest(res.data.content);
+    });
+  }, []);
+
   return (
     <div className="width-content home">
       <div className="home1">
@@ -33,13 +41,10 @@ export default () => {
           </div>
           <div className="list">
             <ul>
-              {data.map((v, i) => (
+              {latest.map((v, i) => (
                 <li key={i}>
                   <div className="list-item">
-                    <Link to="/f/details/0">
-                      （VD4027）《论注庆卯录》 线装一册 油印本 佛教书 宗教书
-                      《往生论注》又称《净土论注》
-                    </Link>
+                    <Link to={`/f/details/${v.id}`}>{v.name}</Link>
                   </div>
                 </li>
               ))}
@@ -62,8 +67,8 @@ export default () => {
       <div className="home2">
         <Tabs defaultActiveKey="1">
           {TagTypes.map((v, i) => (
-            <Tabs.TabPane tab={v} key={i + 1} activeKey={i + 1}>
-              <CardList />
+            <Tabs.TabPane tab={v.title} key={i + 1} activeKey={i + 1}>
+              <CardList type={v.type} />
             </Tabs.TabPane>
           ))}
         </Tabs>

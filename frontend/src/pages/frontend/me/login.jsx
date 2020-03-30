@@ -1,19 +1,42 @@
 import React from "react";
+import { Form, Input, Icon, Checkbox, Button, message } from "antd";
 
-import { Form, Input, Icon, Checkbox, Button } from "antd";
-
+import { useUser, STORE_CURRENT_USER } from "../../../store/index";
+import { login, ping } from "../../../service/UserApi";
 import "./login.less";
 
 export default Form.create()(({ form }) => {
   const { getFieldDecorator } = form;
+  const { dispatch } = useUser();
 
   const handleSubmit = e => {
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        setTimeout(() => {
-          window.location.href = "/#/f/home";
-        }, 1500);
+        login(values.username, values.password)
+          .then(() => {
+            message.success("登录成功，2秒后跳转至首页...");
+            ping()
+              .then(res => {
+                dispatch({
+                  type: STORE_CURRENT_USER,
+                  payload: {
+                    user: res.data,
+                    isLogin: true,
+                    isAdmin: res.data.role === "ADMIN",
+                    isSuperAdmin: res.data.role === "SUPER_ADMIN"
+                  }
+                });
+              })
+              .then(() => {
+                setTimeout(() => {
+                  window.location.href = "/#/f/home";
+                }, 1500);
+              });
+          })
+          .catch(() => {
+            message.error("登录失败");
+          });
       }
     });
   };

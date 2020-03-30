@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface UserRep extends JpaRepository<User, Integer> {
 
     User findByUsername(String username);
+
+    User findByPhoneAndUsername(String phone, String username);
 }

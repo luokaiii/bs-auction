@@ -1,20 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Menu, Avatar, Button } from "antd";
 import { Link, Switch, Route } from "react-router-dom";
 import SubMenu from "antd/lib/menu/SubMenu";
 
+import { ping, logout } from "../../service/UserApi";
+import {
+  useUser,
+  STORE_CURRENT_USER,
+  REMOVE_CURRENT_USER
+} from "../../store/index";
 import { backRoutes } from "../../routerConfig";
 import "./BackLayout.less";
 
 export default () => {
+  const [user, setUser] = useState({});
+  const { dispatch } = useUser();
+
+  const quit = () => {
+    logout()
+      .then(() => {
+        dispatch({
+          type: REMOVE_CURRENT_USER
+        });
+      })
+      .then(() => {
+        window.location.href = "/#/f/login";
+      });
+  };
+
+  useEffect(() => {
+    ping()
+      .then(res => {
+        dispatch({
+          type: STORE_CURRENT_USER,
+          payload: {
+            user: res.data,
+            isLogin: true,
+            isAdmin: res.data.role === "ADMIN",
+            isSuperAdmin: res.data.role === "SUPER_ADMIN"
+          }
+        });
+        return res.data;
+      })
+      .then(res => {
+        setUser(res);
+      });
+  }, [dispatch]);
+
   return (
     <Layout className="back-layout">
       <Layout.Header className="header">
         <div className="width-content menu">
           <Menu theme="light" mode="horizontal">
-            <Menu.Item key="sub1">
-              <Link to="/b/home">首页</Link>
-            </Menu.Item>
             <Menu.Item>
               <Link to="/b/user/list/CUSTOMER">用户管理</Link>
             </Menu.Item>
@@ -54,13 +91,9 @@ export default () => {
             </Menu.Item>
           </Menu>
           <div className="profile">
-            <Avatar
-              shape="square"
-              size="large"
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            />
-            <span>欢迎您，张三！</span>
-            <Button size="small" type="primary">
+            <Avatar shape="square" size="large" src={user.avatar} />
+            <span>欢迎您，{user.nickname}！</span>
+            <Button size="small" type="primary" onClick={quit}>
               退出
             </Button>
           </div>

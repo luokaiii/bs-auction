@@ -37,6 +37,8 @@ public class Goods extends Entity {
     /* 加价幅度 */
     @NotNull
     private Long range;
+    /* 当前价格 */
+    private Long currentPrice;
     /* 竞拍次数 */
     private Long time;
     /* 商品状态 */

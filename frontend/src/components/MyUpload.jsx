@@ -2,20 +2,23 @@
 import React from "react";
 import { Upload, Icon } from "antd";
 
+import { upload } from "../service/FileApi";
+
 export default ({ fileList, setFileList, replace = true }) => {
   const customRequest = opt => {
-    const result = {
-      uid: Math.random(),
-      name: "image.jpg",
-      status: "done",
-      url:
-        "http://cdn.baletoo.cn/Uploads/housephoto/4329/4328550/oss_8453216983444005.png@!380_280.png"
-    };
-    if (replace) {
-      setFileList([result]);
-    } else {
-      setFileList([result, ...fileList]);
-    }
+    upload(opt.file).then(res => {
+      const result = {
+        uid: Math.random(),
+        name: "image.jpg",
+        status: "done",
+        url: res.data
+      };
+      if (replace) {
+        setFileList([result]);
+      } else {
+        setFileList([result, ...fileList]);
+      }
+    });
   };
 
   const customRemove = file => {
