@@ -8,12 +8,17 @@ import {
   Col,
   InputNumber,
   Steps,
-  Result
+  Result,
+  message,
+  notification
 } from "antd";
 
+import { registry } from "../../../service/UserApi";
+import MyUpload from "../../../components/MyUpload";
 import "./registry.less";
 
 export default Form.create()(({ form }) => {
+  const [avatar, setAvatar] = useState([]);
   const [current, setCurrent] = useState(0);
   const [authCode, setAuthCode] = useState(
     Math.floor(Math.random() * 9000) + 1000
@@ -60,14 +65,38 @@ export default Form.create()(({ form }) => {
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        setCurrent(2);
+        if (avatar.length === 0) {
+          notification.error({
+            message: "请上传头像"
+          });
+          return;
+        }
+        const data = Object.assign(
+          {
+            avatar: avatar[0].url,
+            role: "CUSTOMER",
+            disabled: false,
+            createDate: new Date()
+          },
+          values
+        );
+        registry(data)
+          .then(() => {
+            message.success("注册成功，2秒后跳转至登录页");
+            setTimeout(() => {
+              window.location.href = "/#/f/login";
+            }, 1500);
+          })
+          .catch(() => {
+            message.error("注册失败，用户已存在");
+          });
       }
     });
   };
 
   const Step1Render = () => {
     return (
-      <div>
+      <Form>
         <Form.Item>
           {getFieldDecorator("username", {
             rules: [
@@ -78,30 +107,6 @@ export default Form.create()(({ form }) => {
             <Input
               prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
               placeholder="用户名 为6-18位字母、数字组合"
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator("nickname", {
-            rules: [{ required: true, message: "昵称不能为空" }]
-          })(
-            <Input
-              prefix={
-                <Icon type="smile" style={{ color: "rgba(0,0,0,.25)" }} />
-              }
-              placeholder="昵称 为2-12位字符"
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator("phone", {
-            rules: [{ required: true, message: "联系方式不能为空" }]
-          })(
-            <Input
-              prefix={
-                <Icon type="phone" style={{ color: "rgba(0,0,0,.25)" }} />
-              }
-              placeholder="请输入联系方式"
             />
           )}
         </Form.Item>
@@ -152,17 +157,49 @@ export default Form.create()(({ form }) => {
             </Row>
           )}
         </Form.Item>
-      </div>
+        <Button block type="primary" onClick={() => setCurrent(1)}>
+          下一步
+        </Button>
+      </Form>
     );
   };
 
   const Step2Render = () => {
     return (
-      <Form.Item>
-        <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
-          注 册
-        </Button>
-      </Form.Item>
+      <Form>
+        <Form.Item>
+          <MyUpload fileList={avatar} setFileList={setAvatar} replace={true} />
+        </Form.Item>
+        <Form.Item>
+          {getFieldDecorator("nickname", {
+            rules: [{ required: true, message: "昵称不能为空" }]
+          })(
+            <Input
+              prefix={
+                <Icon type="smile" style={{ color: "rgba(0,0,0,.25)" }} />
+              }
+              placeholder="昵称 为2-12位字符"
+            />
+          )}
+        </Form.Item>
+        <Form.Item>
+          {getFieldDecorator("phone", {
+            rules: [{ required: true, message: "联系方式不能为空" }]
+          })(
+            <Input
+              prefix={
+                <Icon type="phone" style={{ color: "rgba(0,0,0,.25)" }} />
+              }
+              placeholder="请输入联系方式"
+            />
+          )}
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
+            注 册
+          </Button>
+        </Form.Item>
+      </Form>
     );
   };
 
@@ -185,32 +222,14 @@ export default Form.create()(({ form }) => {
       <div style={{ height: "70px" }}></div>
       <div className="login-div">
         <h3 className="title">注册并填写信息</h3>
-        <Form className="form" onSubmit={handleSubmit}>
-          <Steps current={current}>
-            <Steps.Step title="注册" />
-            <Steps.Step title="完善" />
-            <Steps.Step title="完成" />
-          </Steps>
-          {current === 0 && <Step1Render />}
-          {current === 1 && <Step2Render />}
-          {current === 2 && <Step3Render />}
-          {current === 0 && (
-            <Button block type="primary" onClick={() => setCurrent(1)}>
-              下一步
-            </Button>
-          )}
-          {current === 1 && (
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ width: "100%" }}
-              >
-                注 册
-              </Button>
-            </Form.Item>
-          )}
-        </Form>
+        <Steps current={current}>
+          <Steps.Step title="注册" />
+          <Steps.Step title="完善" />
+          <Steps.Step title="完成" />
+        </Steps>
+        {current === 0 && <Step1Render />}
+        {current === 1 && <Step2Render />}
+        {current === 2 && <Step3Render />}
       </div>
     </div>
   );

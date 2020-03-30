@@ -17,11 +17,15 @@ export default () => {
   const { dispatch } = useUser();
 
   const quit = () => {
-    logout().then(() => {
-      dispatch({
-        type: REMOVE_CURRENT_USER
+    logout()
+      .then(() => {
+        dispatch({
+          type: REMOVE_CURRENT_USER
+        });
+      })
+      .then(() => {
+        window.location.href = "/#/f/login";
       });
-    });
   };
 
   useEffect(() => {
