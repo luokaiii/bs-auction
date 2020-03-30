@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  } from "react";
 import {
   Breadcrumb,
   Icon,
@@ -6,9 +6,6 @@ import {
   Carousel,
   InputNumber,
   Button,
-  List,
-  Skeleton,
-  Avatar
 } from "antd";
 import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
 
@@ -32,11 +29,7 @@ const StatusTag = {
 };
 
 export default () => {
-  const [bidList, setBidList] = useState([{}, {}, {}, {}, {}]);
   let slider;
-  const loadMore = () => {
-    setBidList([...[{}, {}, {}], ...bidList]);
-  };
   return (
     <div className="details">
       <div className="width-content">

@@ -2,7 +2,7 @@ import React from "react";
 import { Layout, Menu, Icon, Button } from "antd";
 import { Switch, Route, Link } from "react-router-dom";
 
-import LOGO from "./static/logo.png";
+import LOGO from "../../static/logo.png";
 import { frontRoutes } from "../../routerConfig";
 import "./UserLayout.less";
 

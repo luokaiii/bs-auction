@@ -7,7 +7,6 @@ import {
   Row,
   Col,
   InputNumber,
-  message,
   Steps,
   Result
 } from "antd";

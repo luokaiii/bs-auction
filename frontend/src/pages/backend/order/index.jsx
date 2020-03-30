@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Table, Tag, Button } from "antd";
 import { Link } from "react-router-dom";
 
-import CoverImg from "../../../static/cover.jpg";
 import "./index.less";
 
 const columns = [
