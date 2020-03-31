@@ -2,11 +2,15 @@ package cn.bs.auction.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 @EqualsAndHashCode(callSuper = true)
 @javax.persistence.Entity
@@ -57,13 +61,15 @@ public class Goods extends Entity {
     private LocalDateTime startTime;
     /* 结束时间 */
     private LocalDateTime endTime;
+    /* 持续时长 */
+    private Integer duration;
 
     /* 中标用户名称 */
     private String auctionUsername;
     /* 中标用户ID */
-    private String auctionUserId;
+    private Integer auctionUserId;
     /* 中标价格 */
-    private String auctionPrice;
+    private Long auctionPrice;
 
     public enum Type {
         /* 手机 */

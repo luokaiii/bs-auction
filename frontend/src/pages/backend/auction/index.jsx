@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Table } from "antd";
+import React, { useState, useEffect, useCallback } from "react";
+import { Table, Button } from "antd";
 import { Link } from "react-router-dom";
 
-import CoverImg from "../../../static/cover.jpg";
+import { formatDate } from "../../../components/constants";
+import { getByPage } from "../../../service/GoodsApi";
 import "./index.less";
 
 const columns = [
@@ -14,80 +15,83 @@ const columns = [
   {
     title: "封面",
     key: "cover",
-    render: () => (
-      <Link to="/b/auction/details/0">
-        <img alt="" height="70px" src={CoverImg} />
+    dataIndex: "cover",
+    render: (t, r) => (
+      <Link to={`/b/auction/details/${r.id}`}>
+        <img alt="" height="70px" src={t} />
       </Link>
     )
   },
   {
     title: "名称",
     key: "name",
-    render: () => <Link to="/b/auction/details/0">荣耀MagicBook 2019</Link>
+    dataIndex: "name",
+    render: (t, r) => <Link to={`/b/auction/details/${r.id}`}>{t}</Link>
+  },
+  {
+    title: "类型",
+    key: "type",
+    dataIndex: "type"
   },
   {
     title: "起拍价",
     key: "startPrice",
-    render: () => "￥4999元"
+    dataIndex: "startPrice"
   },
   {
     title: "创建人(管理员)",
     key: "username",
-    render: () => "管理员-张三"
+    dataIndex: "username",
+    render: (t, r) => <Link to={`/#/b/user/details/${r.userId}`}>{t}</Link>
   },
   {
     title: "开拍时间",
     key: "startTime",
-    render: () => "2020-03-25 14:00:12"
+    dataIndex: "startTime",
+    render: t => formatDate(t)
   },
   {
     title: "当前状态",
     key: "status",
-    render: () => "拍卖中"
+    dataIndex: "status"
   },
   {
     title: "中标人(用户)",
     key: "auctionUsername",
-    render: () => "用户-李四"
+    dataIndex: "auctionUsername"
   },
   {
     title: "出价记录",
     key: "records",
-    render: () => <Link to="/b/order/0">查看出价记录</Link>
+    render: (t, r) => <Link to={`/b/order/${r.id}`}>查看出价记录</Link>
   }
 ];
 
-export default () => {
+export default ({ match }) => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
+  const { status } = match.params;
 
-  const loadData = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setData({
-        content: [
-          { id: 0 },
-          { id: 1 },
-          { id: 2 },
-          { id: 3 },
-          { id: 4 },
-          { id: 5 },
-          { id: 6 },
-          { id: 7 },
-          { id: 8 },
-          { id: 9 }
-        ],
-        number: 0,
-        totalElements: 11,
-        size: 10
-      });
-      setLoading(false);
-    }, 1000);
-  };
+  const loadData = useCallback(
+    (params = { page: 0, size: 10 }) => {
+      setLoading(true);
+      const data =
+        status === "all" ? params : Object.assign({ status }, params);
+      getByPage(data)
+        .then(res => {
+          setData(res.data);
+          setLoading(false);
+        })
+        .catch(err => {
+          setLoading(false);
+        });
+    },
+    [status]
+  );
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
   const pagination = {
     current: data.number + 1,
@@ -100,7 +104,10 @@ export default () => {
 
   return (
     <div>
-      <h2>拍品管理</h2>
+      <div className="top-div">
+        <h2>拍品管理</h2>
+        <Button href="/?#/b/auction/edit/0/create">创建</Button>
+      </div>
       <Table
         bordered
         size="small"

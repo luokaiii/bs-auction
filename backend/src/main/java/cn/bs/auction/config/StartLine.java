@@ -29,6 +29,7 @@ public class StartLine implements CommandLineRunner {
         if (optional == null) {
             User user = new User();
             user.setId(null);
+            user.setAvatar("https://s1.ax1x.com/2020/03/31/GKQec6.jpg");
             user.setCreateDate(LocalDate.now());
             user.setUsername("wyw_admin");
             user.setPassword(passwordEncoder.encode("123456"));

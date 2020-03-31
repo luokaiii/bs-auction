@@ -10,10 +10,11 @@ import {
   message
 } from "antd";
 
+import { updatePassword } from "../../../service/UserApi";
 import "./reset.less";
 
 export default Form.create()(({ form }) => {
-  const [authCode, setAuthCode] = useState();
+  const [authCode, setAuthCode] = useState(Math.floor(Math.random() * 9000) + 1000);
   const { getFieldDecorator } = form;
 
   const checkPassword = (rule, value, callback) => {
@@ -48,8 +49,14 @@ export default Form.create()(({ form }) => {
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        message.success("重置成功");
-        window.location.href = "/#/f/login";
+        updatePassword(values.username, values.phone, values.password)
+        .then(res => {
+          message.success("重置成功");
+          window.location.href = "/#/f/login";
+        })
+        .catch(e => {
+          message.error("重置失败,请检查用户名与注册手机号是否相同");
+        });
       }
     });
   };
@@ -129,14 +136,14 @@ export default Form.create()(({ form }) => {
                 </Col>
                 <Col span={8}>
                   <div className="auth-code" onClick={updateCode}>
-                    {authCode || <Icon type="sync" spin />}
+                    {authCode}
                   </div>
                 </Col>
               </Row>
             )}
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
+            <Button type="primary" htmlType="submit" block>
               重置密码
             </Button>
           </Form.Item>

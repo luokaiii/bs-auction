@@ -61,7 +61,7 @@ public class AuctionController {
         Auction auction = new Auction();
         auction.setUsername(user.getNickname());
         auction.setUserId(user.getId());
-        auction.setPrice(price);
+        auction.setPrice(goods.getCurrentPrice() + price);
         auction.setStatus(Auction.Status.CREATED);
         auction.setCreateTime(LocalDateTime.now());
         auction.setGoodsId(goods.getId());
@@ -72,6 +72,7 @@ public class AuctionController {
         auctionRep.save(auction);
 
         goods.setTime(goods.getTime() + 1);
+        goods.setCurrentPrice(price);
         goodsRep.save(goods);
     }
 

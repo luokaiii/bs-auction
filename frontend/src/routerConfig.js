@@ -53,7 +53,7 @@ export const frontRoutes = [
 // 后台页面
 export const backRoutes = [
   {
-    path: "/b/auction/list/:type",
+    path: "/b/auction/list/:status",
     component: BAuction
   },
   {

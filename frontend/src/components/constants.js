@@ -3,7 +3,7 @@ import { Modal } from "antd";
 
 export const formatDate = date => {
   return moment(date)
-    .utcOffset(900)
+    // .utcOffset(960)
     .format("YYYY-MM-DD HH:mm:ss");
 };
 
