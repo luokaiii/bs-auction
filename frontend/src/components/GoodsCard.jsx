@@ -27,7 +27,7 @@ export default ({ data = {}, isMore = false }) => {
     <div className="goods-card" onClick={gotoDetails}>
       <div className="picture">
         <Badge count="未开始">
-          <img alt="" src={data.cover} />
+          <img alt="" src={data.cover} width="220px" />
         </Badge>
       </div>
       <div className="title">{data.name}</div>

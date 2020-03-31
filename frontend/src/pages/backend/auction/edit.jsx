@@ -85,25 +85,36 @@ export default Form.create()(({ form, match }) => {
         )
           .add(values.duration, "h")
           .add(8, "h");
-        const params = Object.assign(
-          {
-            cover: cover[0].url,
-            pictures: pictures.map(v => v.url).join(","),
-            createTime,
-            startTime,
-            endTime,
-            status: "CREATED",
-            time: 0
-          },
-          values
-        );
+        const params = ;
 
         if (id === "0") {
-          create(params).then(res => {
+          create(Object.assign(
+            {
+              cover: cover[0].url,
+              pictures: pictures.map(v => v.url).join(","),
+              createTime,
+              startTime,
+              endTime,
+              currentPrice: values.startPrice,
+              status: "CREATED",
+              time: 0
+            },
+            values
+          )).then(res => {
             window.location.href = "/#/b/auction/list/all";
           });
         } else {
-          update(id, params).then(res => {
+          update(id, Object.assign(
+            {
+              cover: cover[0].url,
+              pictures: pictures.map(v => v.url).join(","),
+              startTime,
+              endTime,
+              status: "CREATED",
+              time: 0
+            },
+            values
+          )).then(res => {
             window.location.href = "/#/b/auction/list/all";
           });
         }
