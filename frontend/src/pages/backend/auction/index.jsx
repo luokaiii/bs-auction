@@ -65,7 +65,8 @@ const columns = [
     title: "中标人(用户)",
     key: "auctionUsername",
     dataIndex: "auctionUsername",
-    render: (t, r) => <Link to={`/#/b/user/details/${r.userId}`}>{t}</Link>
+    render: (t, r) =>
+      t ? <Link to={`/#/b/user/details/${r.userId}`}>{t}</Link> : "无"
   },
   {
     title: "出价记录",

@@ -24,7 +24,7 @@ export default () => {
   const [latest, setLatest] = useState([]);
 
   useEffect(() => {
-    getByPage({ page: 0, size: 12 }).then(res => {
+    getByPage({ page: 0, size: 12, sort: "createTime,desc" }).then(res => {
       setLatest(res.data.content);
     });
   }, []);

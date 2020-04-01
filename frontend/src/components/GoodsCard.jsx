@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge } from "antd";
+import { Badge, Icon } from "antd";
 import Countdown from "antd/lib/statistic/Countdown";
 
 import { formatDate } from "./constants";
@@ -28,6 +28,52 @@ const StatusCountdownRender = ({ data }) => {
     );
   } else {
     return <span>结束时间：{formatDate(data.endTime)}</span>;
+  }
+};
+
+const RenderPriceByStatus = ({ data }) => {
+  switch (data.status) {
+    case "STARTED":
+      return (
+        <div className="left">
+          <div>
+            当前价：
+            <span className="red">
+              ￥{data.currentPrice || data.startPrice}
+            </span>
+          </div>
+          <div>
+            竞拍次数：
+            <Icon type="fire" theme="twoTone" />
+            {data.time}
+          </div>
+        </div>
+      );
+    case "CREATED":
+      return (
+        <div className="left">
+          <div></div>
+          <div>
+            起拍价：<span className="red">￥{data.startPrice}</span>
+          </div>
+        </div>
+      );
+    case "END":
+      return (
+        <div className="left">
+          <div>
+            起拍价：<span className="red">￥{data.startPrice}</span>
+          </div>
+          <div>
+            最终价：
+            <span className="red">
+              ￥{data.currentPrice || data.startPrice}
+            </span>
+          </div>
+        </div>
+      );
+    default:
+      return null;
   }
 };
 
@@ -60,17 +106,7 @@ export default ({ data = {}, isMore = false }) => {
       </div>
       <div className="title">{data.name}</div>
       <div className="price-view">
-        <div className="left">
-          <div>
-            起拍价：<span className="red">￥{data.startPrice}</span>
-          </div>
-          <div>
-            当前价：
-            <span className="red">
-              ￥{data.currentPrice || data.startPrice}
-            </span>
-          </div>
-        </div>
+        <RenderPriceByStatus data={data} />
         <div className="right">
           <StatusCountdownRender data={data} />
         </div>
