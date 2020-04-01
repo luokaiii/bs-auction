@@ -76,7 +76,9 @@ export default () => {
         <div className="bottom">
           <div className="width-content bottom-content">
             <div>
-              <img src={LOGO} alt="logo" className="logo" />
+              <Link to="/f/home">
+                <img src={LOGO} alt="logo" className="logo" />
+              </Link>
             </div>
             <Menu mode="horizontal">
               <Menu.Item>
