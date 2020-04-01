@@ -18,7 +18,7 @@ const columns = [
     key: "goodsCover",
     dataIndex: "goodsCover",
     render: (t, r) => (
-      <Link to={`/b/auction/details/${r.goodsId}`}>
+      <Link to={`/f/details/${r.goodsId}`}>
         <img alt="" height="70px" src={t} />
       </Link>
     )
@@ -27,7 +27,7 @@ const columns = [
     title: "竞拍商品",
     key: "goodsName",
     dataIndex: "goodsName",
-    render: (t, r) => <Link to={`/b/auction/details/${r.goodsId}`}>{t}</Link>
+    render: (t, r) => <Link to={`/f/details/${r.goodsId}`}>{t}</Link>
   },
   {
     title: "起拍价",

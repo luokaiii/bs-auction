@@ -89,32 +89,36 @@ export default ({ match }) => {
                 slider = el;
               }}
             >
-              {Pictures.map((v, i) => (
-                <img
-                  alt=""
-                  src={v}
-                  key={i}
-                  style={{ backgroundSize: "cover" }}
-                />
-              ))}
+              {data.pictures &&
+                data.pictures
+                  .split(",")
+                  .map((v, i) => (
+                    <img
+                      src={v}
+                      key={i}
+                      alt=""
+                      style={{ backgroundSize: "cover" }}
+                    />
+                  ))}
             </Carousel>
             <div className="dots">
-              {Pictures.map((v, i) => (
-                <div
-                  className="dot"
-                  key={i}
-                  onClick={() => {
-                    slider.innerSlider.slickGoTo(i);
-                  }}
-                >
-                  <img alt="" src={v} />
-                </div>
-              ))}
+              {data.pictures &&
+                data.pictures.split(",").map((v, i) => (
+                  <div
+                    className="dot"
+                    key={i}
+                    onClick={() => {
+                      slider.innerSlider.slickGoTo(i);
+                    }}
+                  >
+                    <img alt="" src={v} />
+                  </div>
+                ))}
             </div>
           </div>
           <div className="right">
             <div className="title">
-              <Tag color="#e5503c">推荐</Tag>
+            {StatusTag[data.status || "CREATED"]}
               {data.name ||
                 "荣耀MagicBook 2019 第三方Linux版 14英寸轻薄窄边框笔记本电脑（AMD锐龙7 3700U 8G 512G FHD）冰河银"}
             </div>
@@ -190,9 +194,10 @@ export default ({ match }) => {
           <div>{data.description}</div>
           <div style={{ textAlign: "center" }}>
             <h1>详情图片</h1>
-            {Pictures.map((v, i) => (
-              <img alt="" src={v} key={i} />
-            ))}
+            {data.pictures &&
+              data.pictures
+                .split(",")
+                .map((v, i) => <img src={v} key={i} alt="" />)}
           </div>
         </div>
       </div>

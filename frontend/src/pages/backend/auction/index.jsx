@@ -70,7 +70,9 @@ const columns = [
   {
     title: "出价记录",
     key: "records",
-    render: (t, r) => <Link to={`/b/order/${r.id}`}>查看出价记录</Link>
+    render: (t, r) => (
+      <Link to={`/b/auction/details/${r.id}`}>查看出价记录</Link>
+    )
   },
   {
     title: "操作",

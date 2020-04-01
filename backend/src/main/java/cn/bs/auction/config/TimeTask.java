@@ -61,12 +61,12 @@ public class TimeTask {
             List<Auction> auctions = auctionRep.findByGoodsId(goods.getId(), sort);
             if (auctions.size() > 0) {
                 Auction first = auctions.get(0);
-                System.out.println(String.format("用户[%s]中标商品[%s]", first.getUsername(), first.getGoodsName()));
-                first.setStatus(Auction.Status.BID);
+                System.out.println(String.format("用户[%s],中标商品[%s],价格[%s]", first.getUsername(), first.getGoodsName(), first.getPrice()));
                 goods.setAuctionUserId(first.getUserId());
                 goods.setAuctionUsername(first.getUsername());
                 goods.setAuctionPrice(first.getPrice());
                 auctions.forEach(auction -> auction.setStatus(Auction.Status.UN_BID));
+                first.setStatus(Auction.Status.BID);
                 auctionRep.saveAll(auctions);
             }
         }

@@ -13,8 +13,9 @@ import { ping, logout } from "../../service/UserApi";
 import "./UserLayout.less";
 
 export default () => {
-  const [user, setUser] = useState({});
-  const { dispatch } = useUser();
+  const { dispatch, state } = useUser();
+
+  const { user } = state;
 
   const quit = () => {
     logout()
@@ -29,22 +30,17 @@ export default () => {
   };
 
   useEffect(() => {
-    ping()
-      .then(res => {
-        dispatch({
-          type: STORE_CURRENT_USER,
-          payload: {
-            user: res.data,
-            isLogin: true,
-            isAdmin: res.data.role === "ADMIN",
-            isSuperAdmin: res.data.role === "SUPER_ADMIN"
-          }
-        });
-        return res.data;
-      })
-      .then(res => {
-        setUser(res);
+    ping().then(res => {
+      dispatch({
+        type: STORE_CURRENT_USER,
+        payload: {
+          user: res.data,
+          isLogin: true,
+          isAdmin: res.data.role === "ADMIN",
+          isSuperAdmin: res.data.role === "SUPER_ADMIN"
+        }
       });
+    });
   }, [dispatch]);
 
   return (

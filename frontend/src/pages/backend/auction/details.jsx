@@ -4,6 +4,7 @@ import { Descriptions, Divider, Button } from "antd";
 import { getById } from "../../../service/GoodsApi";
 import { formatDate } from "../../../components/constants";
 import AuctionRecord from "../../../components/AuctionRecord";
+import './details.less'
 
 export default ({ match }) => {
   const [data, setData] = useState({});
@@ -40,7 +41,6 @@ export default ({ match }) => {
         <Descriptions.Item label="封面" span={3}>
           <img src={data.cover} alt="" height="70px" />
         </Descriptions.Item>
-        <Descriptions.Item label="详情图" span={3}></Descriptions.Item>
         <Descriptions.Item label="副标题" span={3}>
           {data.introduce}
         </Descriptions.Item>
@@ -48,19 +48,13 @@ export default ({ match }) => {
           {data.description}
         </Descriptions.Item>
         <Descriptions.Item label="起拍价">
-          ￥${data.startPrice}元
+          ￥{data.startPrice}元
         </Descriptions.Item>
         <Descriptions.Item label="加价幅度">
-          ${data.range}元/次
+          {data.range}元/次
         </Descriptions.Item>
         <Descriptions.Item label="当前最高价">
-          ${data.currentPrice || data.startPrice}元/${data.time}次
-        </Descriptions.Item>
-        <Descriptions.Item label="物流方式">
-          顺丰包邮(全平台支持)
-        </Descriptions.Item>
-        <Descriptions.Item label="佣金" span={2}>
-          无(全平台无佣金)
+          {data.currentPrice || data.startPrice}元/{data.time}次
         </Descriptions.Item>
         <Descriptions.Item label="开始时间">
           {formatDate(data.startTime)}

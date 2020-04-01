@@ -11,6 +11,12 @@ const GoodsStatus = {
   END: "已结束"
 };
 
+const StatusColor = {
+  CREATED: "#ffc069",
+  STARTED: "#a0d911",
+  END: "#a8071a"
+};
+
 const StatusCountdownRender = ({ data }) => {
   if (data.status === "CREATED") {
     return (
@@ -47,9 +53,7 @@ export default ({ data = {}, isMore = false }) => {
       <div className="picture">
         <Badge
           count={GoodsStatus[data.status]}
-          style={{
-            backgroundColor: data.status === "STARTED" ? "#f50" : "grey"
-          }}
+          style={{ backgroundColor: StatusColor[data.status] }}
         >
           <img alt="" src={data.cover} width="220px" />
         </Badge>

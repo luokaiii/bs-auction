@@ -2,26 +2,36 @@ import React, { useState, useEffect } from "react";
 import { Table, Tag, Button } from "antd";
 import { Link } from "react-router-dom";
 
-import { getByPage } from "../../../service/AuctionApi";
+import { getByPage, finish } from "../../../service/AuctionApi";
 import { formatDate } from "../../../components/constants";
 import "./index.less";
 import { useCallback } from "react";
 
 const StatusRender = {
   CREATED: <Tag color="lime">进行中</Tag>,
-  BID: <Tag color="f50">中标</Tag>,
+  BID: <Tag color="#f50">中标</Tag>,
   UN_BID: <Tag>未中标</Tag>,
   FINISHED: <Tag color="geekblue">已完成</Tag>
 };
 
-const OperateRender = {
+const OperateRender = (id, loadData) => ({
   CREATED: "竞拍进行中...",
-  BID: <Button>发货并确认完成</Button>,
+  BID: (
+    <Button
+      onClick={() => {
+        finish(id).then(() => {
+          loadData();
+        });
+      }}
+    >
+      发货并确认完成
+    </Button>
+  ),
   UN_BID: "未中标",
   FINISHED: "订单已完成"
-};
+});
 
-const columns = [
+const columns = loadData => [
   {
     title: "序号",
     key: "number",
@@ -60,16 +70,10 @@ const columns = [
     render: t => formatDate(t)
   },
   {
-    title: "状态",
-    key: "status",
-    dataIndex: "status",
-    render: t => StatusRender[t]
-  },
-  {
     title: "操作",
     key: "operate",
     dataIndex: "status",
-    render: t => OperateRender[t]
+    render: (t, r) => OperateRender(r.id, loadData)[t]
   }
 ];
 
@@ -116,7 +120,7 @@ export default ({ match }) => {
         bordered
         size="small"
         rowKey={r => r.id}
-        columns={columns}
+        columns={columns(loadData)}
         dataSource={data.content}
         loading={loading}
         pagination={pagination}
