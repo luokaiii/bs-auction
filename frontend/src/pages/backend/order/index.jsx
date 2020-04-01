@@ -2,7 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Table, Tag, Button } from "antd";
 import { Link } from "react-router-dom";
 
+import { formatDate } from "../../../components/constants";
 import "./index.less";
+
+const StatusRender = {
+  CREATED: <Tag color="lime">进行中</Tag>,
+  BID: <Tag color="f50">中标</Tag>,
+  UN_BID: <Tag>未中标</Tag>,
+  FINISHED: <Tag color="geekblue">已完成</Tag>
+};
+
+const OperateRender = {
+  CREATED: "竞拍进行中...",
+  BID: <Button>发货并确认完成</Button>,
+  UN_BID: "未中标",
+  FINISHED: "订单已完成"
+};
 
 const columns = [
   {
@@ -12,50 +27,47 @@ const columns = [
   },
   {
     title: "竞拍商品",
-    key: "name",
-    render: () => <Link to="/b/auction/details/0">荣耀MagicBook 2019</Link>
+    key: "goodsName",
+    dataIndex: "goodsName",
+    render: (t, r) => <Link to={`/b/auction/details/${r.goodsId}`}>{t}</Link>
   },
   {
     title: "起拍价",
-    key: "startPrice",
-    render: () => "￥4999元"
+    key: "goodsStartPrice",
+    dataIndex: "goodsStartPrice"
   },
   {
     title: "出价",
     key: "price",
-    render: () => "￥5300元"
+    dataIndex: "price"
   },
   {
     title: "出价时间",
-    key: "startTime",
-    render: () => "2020-03-28 14:00:12"
+    key: "createTime",
+    dataIndex: "createTime",
+    render: t => formatDate(t)
   },
   {
-    title: "结束时间",
-    key: "startTime",
-    render: () => "2020-03-30 14:00:12"
+    title: "竞拍开始时间",
+    key: "goodsStartTime",
+    dataIndex: "goodsStartTime"
   },
   {
-    title: "是否中标",
+    title: "竞拍结束时间",
+    key: "goodsEndTime",
+    dataIndex: "goodsEndTime"
+  },
+  {
+    title: "状态",
     key: "status",
-    render: (...args) =>
-    args[2] === 0 ? (
-      <Tag color="#f50">中标</Tag>
-    ) : (
-      <Tag>未中标</Tag>
-    )
+    dataIndex: "status",
+    render: t => StatusRender[t]
   },
   {
     title: "操作",
     key: "operate",
-    render: (...args) =>
-      args[2] === 0 ? (
-        <Button type="primary" size="small">
-          确认并发货
-        </Button>
-      ) : (
-        "拍卖进行中..."
-      )
+    dataIndex: "status",
+    render: t => OperateRender[t]
   }
 ];
 

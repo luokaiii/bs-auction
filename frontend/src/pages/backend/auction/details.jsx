@@ -41,7 +41,7 @@ export default ({ match }) => {
           <img src={data.cover} alt="" height="70px" />
         </Descriptions.Item>
         <Descriptions.Item label="详情图" span={3}></Descriptions.Item>
-        <Descriptions.Item label="简介" span={3}>
+        <Descriptions.Item label="副标题" span={3}>
           {data.introduce}
         </Descriptions.Item>
         <Descriptions.Item label="详细描述" span={3}>

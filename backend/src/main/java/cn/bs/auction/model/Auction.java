@@ -37,6 +37,8 @@ public class Auction extends Entity {
     private String goodsName;
     /* 竞品封面 */
     private String goodsCover;
+    /* 竞品起拍价 */
+    private Long goodsStartPrice;
     /* 竞品开始时间 */
     private LocalDateTime goodsStartTime;
     /* 竞品结束时间 */

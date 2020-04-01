@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Form,
-  message,
   Input,
   Select,
   DatePicker,
@@ -66,16 +65,16 @@ export default Form.create()(({ form, match }) => {
   const handleSubmit = () => {
     form.validateFields((err, values) => {
       if (!err) {
-        // if (cover.length === 0) {
-        //   notification.error({
-        //     message: "请上传封面"
-        //   });
-        // }
-        // if (pictures.length === 0) {
-        //   notification.error({
-        //     message: "请上传详情图"
-        //   });
-        // }
+        if (cover.length === 0) {
+          notification.error({
+            message: "请上传封面"
+          });
+        }
+        if (pictures.length === 0) {
+          notification.error({
+            message: "请上传详情图"
+          });
+        }
         const createTime = moment().add(8, "h");
         const startTime = moment(
           dateValue.format("YYYY-MM-DD") + timeValue.format().slice(10)
@@ -85,7 +84,6 @@ export default Form.create()(({ form, match }) => {
         )
           .add(values.duration, "h")
           .add(8, "h");
-        const params = ;
 
         if (id === "0") {
           create(Object.assign(
@@ -147,14 +145,14 @@ export default Form.create()(({ form, match }) => {
             rules: [{ required: true, message: "标题不能为空" }]
           })(<Input placeholder="请输入标题" />)}
         </Form.Item>
-        <Form.Item label="简介">
+        <Form.Item label="副标题">
           <Row>
             <Col span={18}>
               <Form.Item>
                 {getFieldDecorator("introduce", {
                   initialValue: data.introduce,
-                  rules: [{ required: true, message: "简介不能为空" }]
-                })(<Input.TextArea placeholder="请输入简介" />)}
+                  rules: [{ required: true, message: "副标题不能为空" }]
+                })(<Input.TextArea placeholder="请输入副标题" />)}
               </Form.Item>
             </Col>
             <Col span={6}>

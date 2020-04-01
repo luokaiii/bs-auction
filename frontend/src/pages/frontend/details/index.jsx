@@ -1,17 +1,21 @@
-import React, {  } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Breadcrumb,
   Icon,
   Tag,
   Carousel,
-  InputNumber,
   Button,
+  notification,
+  Tooltip
 } from "antd";
 import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
-
-import AuctionRecord from '../../../components/AuctionRecord'
-import "./index.less";
 import Countdown from "antd/lib/statistic/Countdown";
+
+import { formatDate } from "../../../components/constants";
+import { getById } from "../../../service/GoodsApi";
+import { offer } from "../../../service/AuctionApi";
+import AuctionRecord from "../../../components/AuctionRecord";
+import "./index.less";
 
 const Pictures = [
   "https://img10.360buyimg.com/n1/s450x450_jfs/t1/110329/5/3697/324874/5e1436b0E000652a6/9b61f9e797fda9e0.jpg",
@@ -21,14 +25,42 @@ const Pictures = [
   "https://img10.360buyimg.com/n1/s450x450_jfs/t1/90716/6/523/54582/5daffacaE732854b7/deb1ca5e49fb8095.jpg"
 ];
 
-const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
+const Time = [1, 2, 3, 4, 5];
 
 const StatusTag = {
+  CREATED: <Tag color="#f50">竞拍尚未开始</Tag>,
   STARTED: <Tag color="#87d068">拍卖中</Tag>,
   END: <Tag color="#f50">已结束</Tag>
 };
 
-export default () => {
+export default ({ match }) => {
+  const [selected, setSelected] = useState(3);
+  const [data, setData] = useState({});
+  const { id } = match.params;
+
+  const handleOffer = () => {
+    const price = selected * data.range;
+    offer(id, price)
+      .then(() => {
+        notification.success({
+          message: "出价成功！"
+        });
+      })
+      .catch(() => {
+        notification.error({
+          message: "出价失败！请刷新重试！"
+        });
+      });
+  };
+
+  useEffect(() => {
+    getById(id)
+      .then(res => setData(res.data))
+      .catch(() => {
+        notification.error("加载失败！");
+      });
+  }, [id]);
+
   let slider;
   return (
     <div className="details">
@@ -45,7 +77,8 @@ export default () => {
           </BreadcrumbItem>
         </Breadcrumb>
         <div className="title-div">
-          {StatusTag["STARTED"]}华为荣耀MagicBook拍卖专场
+          {StatusTag[data.status || "CREATED"]}
+          {data.introduce || "华为荣耀 MagicBook 专场"}
         </div>
         <div className="bg-white-div desc-div">
           <div className="left">
@@ -81,14 +114,15 @@ export default () => {
           </div>
           <div className="right">
             <div className="title">
-              <Tag color="#e5503c">推荐</Tag>荣耀MagicBook 2019 第三方Linux版
-              14英寸轻薄窄边框笔记本电脑（AMD锐龙7 3700U 8G 512G FHD）冰河银
+              <Tag color="#e5503c">推荐</Tag>
+              {data.name ||
+                "荣耀MagicBook 2019 第三方Linux版 14英寸轻薄窄边框笔记本电脑（AMD锐龙7 3700U 8G 512G FHD）冰河银"}
             </div>
             <div className="price-time">
-              <div className="price">起拍价：￥1200</div>
+              <div className="price">起拍价：￥{data.startPrice}</div>
               <div className="time">
                 <Countdown
-                  value={deadline}
+                  value={data.startTime}
                   format="距开始： D 天 H 时 m 分 s 秒"
                 />
               </div>
@@ -96,52 +130,66 @@ export default () => {
             <div className="bid">
               <div className="bid1">立即出价</div>
               <div className="bid2">
-                <InputNumber
-                  defaultValue="1000"
-                  step="100"
-                  formatter={v => `￥ ${v}`}
-                />
-                <Button>立即出价</Button>
+                {Time.map((v, i) => (
+                  <Button
+                    key={i}
+                    className={`ant-btn1 ${selected === v && "selected"}`}
+                    onClick={() => setSelected(v)}
+                  >
+                    +{v * data.range}
+                  </Button>
+                ))}
+              </div>
+              <div className="bid2">
+                <Button
+                  className="ant-btn2"
+                  onClick={handleOffer}
+                  disabled={data.status !== "STARTED"}
+                >
+                  {data.status !== "STARTED" && <Icon type="stop" />}立即出价
+                </Button>
               </div>
             </div>
             <div className="desc">
               <div className="line">
-                <div>起拍价：￥1200</div>
-                <div>加价幅度：阶梯出价</div>
+                <div>起拍价：￥{data.startPrice}</div>
+                <div>
+                  加价幅度：
+                  <Tooltip title="按照加价幅度的1-5倍出价">阶梯出价</Tooltip>
+                </div>
               </div>
               <div className="line">
-                <div>延时周期：30秒/次</div>
-                <div>出品人：亚伟拍卖</div>
+                <div>出价次数：{data.time}次</div>
+                <div>
+                  出品人：
+                  <Tooltip title="所有商品均由平台出售">拍卖平台</Tooltip>
+                </div>
               </div>
               <div className="line">
-                <div>买家佣金：5%</div>
-                <div>顺丰速运：包邮</div>
+                <div>开始时间：{formatDate(data.startTime)}</div>
+                <div>
+                  顺丰速运：<Tooltip title="全平台顺丰包邮(mock)">包邮</Tooltip>
+                </div>
               </div>
               <div className="line">
-                <div>开始时间：即将开始</div>
-                <div>出价次数：0次</div>
+                <div>结束时间：{formatDate(data.endTime)}</div>
+                <div>
+                  买家佣金：
+                  <Tooltip title="平台无佣金，全免费(mock)">0</Tooltip>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className="bg-white-div record-div">
           <h1>出价记录</h1>
-          <AuctionRecord />
+          <AuctionRecord goodsId={id} />
         </div>
         <div className="bg-white-div details-div">
-          <h1>拍品详情</h1>
-          <div>
-            功能要点 - 使用BraftEditor.createEditorState创建editorState -
-            <br />
-            使用editorState.toHTML()实时获取html 注意事项 -
-            <br />
-            编辑器的value属性必须是一个editorState对象 -
-            <br />
-            实际使用时请避免在onChange中直接toHTML，配合节流函数或者在合适的时机使用更恰当
-            <br />
-          </div>
-          <div>
-            <h3>详情图片</h3>
+          <h1 style={{ textAlign: "center" }}>拍品详情</h1>
+          <div>{data.description}</div>
+          <div style={{ textAlign: "center" }}>
+            <h1>详情图片</h1>
             {Pictures.map((v, i) => (
               <img alt="" src={v} key={i} />
             ))}

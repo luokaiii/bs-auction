@@ -67,6 +67,7 @@ public class AuctionController {
         auction.setGoodsId(goods.getId());
         auction.setGoodsName(goods.getName());
         auction.setGoodsCover(goods.getCover());
+        auction.setGoodsStartPrice(goods.getStartPrice());
         auction.setGoodsStartTime(goods.getStartTime());
         auction.setGoodsEndTime(goods.getEndTime());
         auctionRep.save(auction);

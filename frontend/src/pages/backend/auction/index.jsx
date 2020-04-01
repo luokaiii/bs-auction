@@ -2,8 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Table, Button } from "antd";
 import { Link } from "react-router-dom";
 
-import { formatDate } from "../../../components/constants";
-import { getByPage } from "../../../service/GoodsApi";
+import {
+  formatDate,
+  GoodsType,
+  GoodsStatus
+} from "../../../components/constants";
+import { getByPage, deleteById } from "../../../service/GoodsApi";
 import "./index.less";
 
 const columns = [
@@ -31,7 +35,8 @@ const columns = [
   {
     title: "类型",
     key: "type",
-    dataIndex: "type"
+    dataIndex: "type",
+    render: t => GoodsType[t]
   },
   {
     title: "起拍价",
@@ -53,17 +58,28 @@ const columns = [
   {
     title: "当前状态",
     key: "status",
-    dataIndex: "status"
+    dataIndex: "status",
+    render: t => GoodsStatus[t]
   },
   {
     title: "中标人(用户)",
     key: "auctionUsername",
-    dataIndex: "auctionUsername"
+    dataIndex: "auctionUsername",
+    render: (t, r) => <Link to={`/#/b/user/details/${r.userId}`}>{t}</Link>
   },
   {
     title: "出价记录",
     key: "records",
     render: (t, r) => <Link to={`/b/order/${r.id}`}>查看出价记录</Link>
+  },
+  {
+    title: "操作",
+    key: "operate",
+    render: (t, r) => (
+      <Button onClick={() => deleteById(r.id)} type="danger" size="small">
+        删除
+      </Button>
+    )
   }
 ];
 
