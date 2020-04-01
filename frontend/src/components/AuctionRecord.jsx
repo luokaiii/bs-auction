@@ -30,7 +30,7 @@ export default ({ goodsId }) => {
 
   useInterval(() => {
     loadList();
-  }, 5000);
+  }, 1500);
 
   const loadList = useCallback(
     (params = { sort: "createTime,desc", goodsId }) => {

@@ -4,7 +4,7 @@ import { Divider } from "antd";
 export default function about() {
   return (
     <div className="page">
-      <Divider children="支付流程" />
+      <Divider children="支付流程(以下均为模拟数据，非真实数据)" />
       <p style={{ textAlign: "start", textIndent: "2em" }}>
         我们支持多种支付方式，且不收取任何手续费：
       </p>

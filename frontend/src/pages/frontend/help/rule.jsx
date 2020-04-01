@@ -4,11 +4,11 @@ import { Divider } from "antd";
 export default function about() {
   return (
     <div className="page">
-      <Divider children="拍卖规则" />
+      <Divider children="拍卖规则(以下均为模拟数据，非真实数据)" />
       <p style={{ textAlign: "start", textIndent: "2em" }}>
         <span style={{ color: "#3e3e3e" }}>
           <strong>
-            <span style={{ fontSize: "16px" }}>亚伟拍卖拍卖规则简述</span>
+            <span style={{ fontSize: "16px" }}>本拍卖平台拍卖规则简述</span>
           </strong>
         </span>
       </p>
@@ -27,7 +27,7 @@ export default function about() {
       <p style={{ textAlign: "start", textIndent: "2em" }}>
         <span style={{ fontSize: "15px" }}>
           <strong>在线拍卖 </strong>
-          自由出价，有三天自由出价时间，买家依据设置好的阶梯出价，自由出价时间结束后，进入延时倒数，在最高价产生后延时5分钟，无人出价即成交。若中间有新买家出价则重新延时倒数，直至无人出价，价高者得。
+          自由出价，有不定时的自由出价时间，买家依据设置好的阶梯出价，自由出价时间结束后，将不得再进行商品的竞拍。
         </span>
       </p>
       <p style={{ textAlign: "start", textIndent: "2em" }}>
@@ -60,6 +60,10 @@ export default function about() {
       <p style={{ textAlign: "start", textIndent: "2em" }}>
         <span style={{ fontSize: "15px" }}>
           竞买成功后，买家应在三日内交割付款，否则视为违约，平台有权关闭交易。违约有对应的信用评价体系处理。
+        </span>
+        <br />
+        <span style={{ fontSize: "15px" }}>
+          本平台为模拟交易场景，因此不具备物流、交易等其它情景。
         </span>
       </p>
       <p style={{ textAlign: "start", textIndent: "2em" }}>
