@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/bs/auction")
@@ -44,6 +47,13 @@ public class AuctionController {
         return ResponseEntity.ok(page);
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<List<Auction>> findByPage(Auction auction,
+                                                    @SortDefault Sort sort) {
+        List<Auction> list = auctionRep.findAll(Example.of(auction), sort);
+        return ResponseEntity.ok(list);
+    }
+
     /**
      * 参与一次竞拍
      *
@@ -61,6 +71,7 @@ public class AuctionController {
         Auction auction = new Auction();
         auction.setUsername(user.getNickname());
         auction.setUserId(user.getId());
+        auction.setUserProfile(user.getAvatar());
         auction.setPrice(goods.getCurrentPrice() + price);
         auction.setStatus(Auction.Status.CREATED);
         auction.setCreateTime(LocalDateTime.now());
@@ -73,7 +84,7 @@ public class AuctionController {
         auctionRep.save(auction);
 
         goods.setTime(goods.getTime() + 1);
-        goods.setCurrentPrice(price);
+        goods.setCurrentPrice(goods.getCurrentPrice() + price);
         goodsRep.save(goods);
     }
 

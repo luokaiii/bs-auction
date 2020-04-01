@@ -22,6 +22,8 @@ public class Auction extends Entity {
     private String username;
     /* 用户ID */
     private Integer userId;
+    /* 用户头像 */
+    private String userProfile;
     /* 竞拍价格 */
     private Long price;
     /* 完成时间 */

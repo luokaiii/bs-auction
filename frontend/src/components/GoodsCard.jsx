@@ -2,9 +2,28 @@ import React from "react";
 import { Badge } from "antd";
 import Countdown from "antd/lib/statistic/Countdown";
 
+import { formatDate } from "./constants";
 import "./GoodsCard.less";
 
-const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
+const GoodsStatus = {
+  CREATED: "未开始",
+  STARTED: "进行中",
+  END: "已结束"
+};
+
+const StatusCountdownRender = ({ data }) => {
+  if (data.status === "CREATED") {
+    return (
+      <Countdown value={data.startTime} format="距开始：D 天 H 时 m 分 s 秒" />
+    );
+  } else if (data.status === "STARTED") {
+    return (
+      <Countdown value={data.endTime} format="距结束：D 天 H 时 m 分 s 秒" />
+    );
+  } else {
+    return <span>结束时间：{formatDate(data.endTime)}</span>;
+  }
+};
 
 export default ({ data = {}, isMore = false }) => {
   const gotoDetails = () => {
@@ -26,7 +45,12 @@ export default ({ data = {}, isMore = false }) => {
   return (
     <div className="goods-card" onClick={gotoDetails}>
       <div className="picture">
-        <Badge count="未开始">
+        <Badge
+          count={GoodsStatus[data.status]}
+          style={{
+            backgroundColor: data.status === "STARTED" ? "#f50" : "grey"
+          }}
+        >
           <img alt="" src={data.cover} width="220px" />
         </Badge>
       </div>
@@ -37,15 +61,14 @@ export default ({ data = {}, isMore = false }) => {
             起拍价：<span className="red">￥{data.startPrice}</span>
           </div>
           <div>
-            当前价：<span className="red">￥{data.currentPrice}</span>
+            当前价：
+            <span className="red">
+              ￥{data.currentPrice || data.startPrice}
+            </span>
           </div>
         </div>
-
         <div className="right">
-          {/* 竞拍次数：
-          <Icon type="fire" theme="twoTone" />
-          15 */}
-          <Countdown value={deadline} format="距开始：D 天 H 时 m 分 s 秒" />
+          <StatusCountdownRender data={data} />
         </div>
       </div>
     </div>

@@ -89,7 +89,7 @@ export default ({ match }) => {
   const { status } = match.params;
 
   const loadData = useCallback(
-    (params = { page: 0, size: 10 }) => {
+    (params = { page: 0, size: 10, sort: "createTime,desc" }) => {
       setLoading(true);
       const data =
         status === "all" ? params : Object.assign({ status }, params);

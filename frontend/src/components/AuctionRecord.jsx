@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { getByPage } from "../service/AuctionApi";
-import { Skeleton, List, Avatar, Button } from "antd";
+import { formatDate } from "./constants";
+import { getByList } from "../service/AuctionApi";
+import { Skeleton, List, Avatar, Button, Badge, Tag } from "antd";
 import { useCallback } from "react";
 
 export default ({ goodsId }) => {
-  const [data, setData] = useState({});
-  const [page, setPage] = useState(0);
-  const [noMore, setNoMore] = useState(true);
+  const [data, setData] = useState([]);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef();
@@ -29,55 +28,49 @@ export default ({ goodsId }) => {
     }, [delay]);
   };
 
-  if (data.status === "STARTED") {
-    useInterval(() => {
-      loadList();
-    }, 5000);
-  }
+  useInterval(() => {
+    loadList();
+  }, 5000);
 
   const loadList = useCallback(
-    (params = { page, size: 5, sort: "createTime,desc", goodsId }) => {
-      getByPage(params).then(res => {
+    (params = { sort: "createTime,desc", goodsId }) => {
+      getByList(params).then(res => {
         setData(res.data);
-        setNoMore(res.data.last);
       });
     },
-    [goodsId, page]
+    [goodsId]
   );
 
   useEffect(() => {
     loadList();
   }, [loadList]);
 
-  const loadMore = () => {
-    setPage(page + 1);
-  };
-
   return (
     <List
+      className="scroll-container"
+      style={{ height: "360px", overflow: "auto" }}
       itemLayout="horizontal"
-      loadMore={
-        <Button
-          block
-          style={{ border: "none" }}
-          disabled={noMore}
-          onClick={loadMore}
-        >
-          查看更多
-        </Button>
-      }
-      dataSource={data.content || []}
-      renderItem={item => (
+      dataSource={data}
+      renderItem={(item, index) => (
         <List.Item>
           <Skeleton avatar title={false} loading={false} active>
             <List.Item.Meta
-              avatar={
-                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+              avatar={<Avatar src={item.userProfile} />}
+              title={
+                <span>
+                  {item.username}
+                  {index === 0 && <Tag color="#f50">最高价</Tag>}
+                </span>
               }
-              title="张三"
-              description="出价 11000 元"
+              description={
+                <span>
+                  出价 <span style={{ color: "#f50" }}>{item.price}</span> 元
+                </span>
+              }
             />
-            <div>2020年03月24日 10时14分33秒</div>
+            <div style={{ marginRight: "10px" }}>
+              {formatDate(item.createTime)}
+            </div>
           </Skeleton>
         </List.Item>
       )}

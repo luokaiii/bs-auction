@@ -73,7 +73,7 @@ export const backRoutes = [
     component: BUserCreate
   },
   {
-    path: "/b/order/list/:type",
+    path: "/b/order/list/:status",
     component: BOrderList
   }
 ];

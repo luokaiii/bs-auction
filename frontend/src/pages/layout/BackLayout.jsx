@@ -69,15 +69,21 @@ export default () => {
                 <Link to="/b/auction/list/END">竞拍结束拍品</Link>
               </Menu.Item>
             </SubMenu>
-            <SubMenu title="订单管理" key="sub4">
+            <SubMenu title="竞拍管理" key="sub4">
               <Menu.Item>
-                <Link to="/b/order/list/all">全部订单</Link>
+                <Link to="/b/order/list/all">全部竞拍</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link to="/b/order/list/BID">中标待确定订单</Link>
+                <Link to="/b/order/list/CREATED">进行中的竞拍</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link to="/b/order/list/FINISHED">历史中标订单</Link>
+                <Link to="/b/order/list/UN_BID">未中标竞拍</Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Link to="/b/order/list/BID">中标待确定竞拍</Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Link to="/b/order/list/FINISHED">历史中标竞拍</Link>
               </Menu.Item>
             </SubMenu>
             <SubMenu title="系统管理" key="sub5">

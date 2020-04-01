@@ -12,6 +12,10 @@ export const getByPage = params => {
   return AxiosRequest.get("/bs/auction", { params });
 };
 
+export const getByList = params => {
+  return AxiosRequest.get("/bs/auction/list", { params });
+};
+
 export const finish = id => {
   return AxiosRequest.put(`/bs/auction/${id}/finished`);
 };

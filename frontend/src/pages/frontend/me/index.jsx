@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Table, Radio, Button, Icon } from "antd";
+import { Link } from "react-router-dom";
 
-import MockCover from "./static/mock.webp";
+import { getByPage } from "../../../service/AuctionApi";
+import { formatDate } from "../../../components/constants";
 import AuctionPro from "./static/auctionpro.png";
 import "./index.less";
 
@@ -12,47 +14,61 @@ const columns = [
     render: (...args) => args[2] + 1
   },
   {
-    title: "竞拍商品图",
-    key: "cover",
-    render: () => <img src={MockCover} alt="" height="60px" />
+    title: "封面",
+    key: "goodsCover",
+    dataIndex: "goodsCover",
+    render: (t, r) => (
+      <Link to={`/b/auction/details/${r.goodsId}`}>
+        <img alt="" height="70px" src={t} />
+      </Link>
+    )
+  },
+  {
+    title: "竞拍商品",
+    key: "goodsName",
+    dataIndex: "goodsName",
+    render: (t, r) => <Link to={`/b/auction/details/${r.goodsId}`}>{t}</Link>
   },
   {
     title: "起拍价",
-    key: "startPrice",
-    render: () => "￥1200"
+    key: "goodsStartPrice",
+    dataIndex: "goodsStartPrice"
   },
   {
-    title: "竞拍价",
+    title: "出价",
     key: "price",
-    render: () => "￥1300"
+    dataIndex: "price"
   },
   {
-    title: "竞价时间",
+    title: "出价时间",
     key: "createTime",
-    render: () => "2020年03月24日 15时30分22秒"
+    dataIndex: "createTime",
+    render: t => formatDate(t)
   }
 ];
 
-export default ({ match }) => {
-  const { role } = match.params;
-  const [data, setData] = useState({ content: [] });
+export default () => {
+  const [status, setStatus] = useState("CREATED");
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
 
   const loadData = useCallback(
-    (params = { page: 0, size: 10, role }) => {
+    (params = { page: 0, size: 5, status, sort: "createTime,desc" }) => {
       setLoading(true);
-      setTimeout(() => {
-        setData({
-          content: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
-          number: 0,
-          totalElements: 11,
-          size: 10
+      getByPage(params)
+        .then(res => {
+          setData(res.data);
+        })
+        .then(() => {
+          setLoading(false);
         });
-        setLoading(false);
-      }, 1500);
     },
-    [role]
+    [status]
   );
+
+  const handleChange = e => {
+    setStatus(e.target.value);
+  };
 
   useEffect(() => {
     loadData();
@@ -63,9 +79,10 @@ export default ({ match }) => {
     total: data.totalElements,
     pageSize: data.size,
     onChange: (page, size) => {
-      loadData({ page: page - 1, size });
+      loadData({ page: page - 1, size, sort: "createTime,desc" });
     }
   };
+
   return (
     <div className="width-content me">
       <div className="title">
@@ -74,10 +91,11 @@ export default ({ match }) => {
           <img src={AuctionPro} alt="" />
         </div>
       </div>
-      <Radio.Group size="large">
-        <Radio.Button value="large">正在竞拍</Radio.Button>
-        <Radio.Button value="default">竞拍结束</Radio.Button>
-        <Radio.Button value="small">竞拍中标</Radio.Button>
+      <Radio.Group size="large" value={status} onChange={handleChange}>
+        <Radio.Button value="CREATED">正在竞拍</Radio.Button>
+        <Radio.Button value="BID">中标竞拍</Radio.Button>
+        <Radio.Button value="UN_BID">未中标竞拍</Radio.Button>
+        <Radio.Button value="FINISHED">历史已完成</Radio.Button>
       </Radio.Group>
       <Table
         bordered
@@ -90,7 +108,13 @@ export default ({ match }) => {
         title={() => (
           <div style={{ textAlign: "center" }}>
             正在竞拍列表
-            <Button size="small" type="link" onClick={loadData}>
+            <Button
+              size="small"
+              type="link"
+              onClick={() =>
+                loadData({ page: 0, size: 5, status, sort: "createTime,desc" })
+              }
+            >
               <Icon type="redo" />
               刷新
             </Button>

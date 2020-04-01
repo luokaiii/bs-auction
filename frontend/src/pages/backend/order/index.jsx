@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Table, Tag, Button } from "antd";
 import { Link } from "react-router-dom";
 
+import { getByPage } from "../../../service/AuctionApi";
 import { formatDate } from "../../../components/constants";
 import "./index.less";
+import { useCallback } from "react";
 
 const StatusRender = {
   CREATED: <Tag color="lime">进行中</Tag>,
@@ -24,6 +26,16 @@ const columns = [
     title: "序号",
     key: "number",
     render: (...args) => args[2] + 1
+  },
+  {
+    title: "封面",
+    key: "goodsCover",
+    dataIndex: "goodsCover",
+    render: (t, r) => (
+      <Link to={`/b/auction/details/${r.goodsId}`}>
+        <img alt="" height="70px" src={t} />
+      </Link>
+    )
   },
   {
     title: "竞拍商品",
@@ -48,16 +60,6 @@ const columns = [
     render: t => formatDate(t)
   },
   {
-    title: "竞拍开始时间",
-    key: "goodsStartTime",
-    dataIndex: "goodsStartTime"
-  },
-  {
-    title: "竞拍结束时间",
-    key: "goodsEndTime",
-    dataIndex: "goodsEndTime"
-  },
-  {
     title: "状态",
     key: "status",
     dataIndex: "status",
@@ -71,37 +73,32 @@ const columns = [
   }
 ];
 
-export default () => {
+export default ({ match }) => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
+  const { status } = match.params;
 
-  const loadData = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setData({
-        content: [
-          { id: 0 },
-          { id: 1 },
-          { id: 2 },
-          { id: 3 },
-          { id: 4 },
-          { id: 5 },
-          { id: 6 },
-          { id: 7 },
-          { id: 8 },
-          { id: 9 }
-        ],
-        number: 0,
-        totalElements: 11,
-        size: 10
-      });
-      setLoading(false);
-    }, 1000);
-  };
+  const loadData = useCallback(
+    (params = { page: 0, size: 10, sort: "createTime,desc" }) => {
+      const p = status === "all" ? params : Object.assign({ status }, params);
+      setLoading(true);
+      getByPage(p)
+        .then(res => {
+          setData(res.data);
+        })
+        .then(() => {
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    },
+    [status]
+  );
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
   const pagination = {
     current: data.number + 1,

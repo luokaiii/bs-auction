@@ -182,7 +182,7 @@ export default ({ match }) => {
           </div>
         </div>
         <div className="bg-white-div record-div">
-          <h1>出价记录</h1>
+          <h1>最新出价记录</h1>
           <AuctionRecord goodsId={id} />
         </div>
         <div className="bg-white-div details-div">

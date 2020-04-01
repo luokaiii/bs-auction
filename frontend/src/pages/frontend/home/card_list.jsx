@@ -7,11 +7,11 @@ export default ({ type }) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    getByPage({ page: 0, size: 7, type }).then(res => {
+    getByPage({ page: 0, size: 7, sort: "createTime,desc", type }).then(res => {
       setList(res.data.content);
     });
   }, [type]);
-  
+
   return (
     <div>
       {list.map((v, i) => (
