@@ -21,11 +21,20 @@ const TagTypes = [
 const CarouselImgs = [MockPic, MockPic, MockPic, MockPic];
 
 export default () => {
+  const [recommend, setRecommend] = useState([]);
   const [latest, setLatest] = useState([]);
 
   useEffect(() => {
-    getByPage({ page: 0, size: 12, sort: "createTime,desc" }).then(res => {
-      setLatest(res.data.content);
+    Promise.all([
+      getByPage({ size: 12, sort: "createTime,desc" }),
+      getByPage({
+        size: 5,
+        status: "STARTED",
+        sort: "createTime,desc"
+      })
+    ]).then(res => {
+      setLatest(res[0].data.content);
+      setRecommend(res[1].data.content);
     });
   }, []);
 
@@ -53,10 +62,15 @@ export default () => {
         </div>
         <div className="right">
           <Carousel dotPosition="right" autoplay>
-            {CarouselImgs.map((v, i) => (
+            {recommend.map((v, i) => (
               <div key={i}>
-                <Link to="/f/details/0">
-                  <img src={v} alt={i} key={i} className="carousel-image" />
+                <Link to={`/f/details/${v.id}`}>
+                  <img
+                    src={v.cover}
+                    alt={i}
+                    key={i}
+                    className="carousel-image"
+                  />
                 </Link>
               </div>
             ))}

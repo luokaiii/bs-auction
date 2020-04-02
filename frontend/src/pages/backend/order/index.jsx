@@ -59,7 +59,13 @@ const columns = loadData => [
     dataIndex: "goodsStartPrice"
   },
   {
-    title: "出价",
+    title: "出价人",
+    key: "username",
+    dataIndex: "username",
+    render: t => <Link>{t}</Link>
+  },
+  {
+    title: "出价价格",
     key: "price",
     dataIndex: "price"
   },
